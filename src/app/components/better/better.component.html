@@ -1,0 +1,51 @@
+<div class="container bg-primary p-1 my-1 border">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Vardas" [(ngModel)]="name">
+      <input type="text" class="form-control" placeholder="Pavardė" [(ngModel)]="surname">      
+      <input type="text" class="form-control" placeholder="Statymo suma" [(ngModel)]="bet">
+      <input type="text" class="form-control" placeholder="Žirgas" [(ngModel)]="horseId">
+      <select class="form-control" [(ngModel)]="horseId">
+        <option *ngFor="let horse of horses" [value]="horse.id">
+            {{horse.name}}
+          </option>
+      </select>        
+  
+      <button type="button" *ngIf="editMode == false" class="btn btn-success btn-rounded" (click)="addBetter()">Naujas dalyvis</button>
+      <button type="button" *ngIf="editMode == true" class="btn btn-warning" (click)="sendUpdatedBetter()">Atnaujink</button>
+    </div>
+  </div>
+  <table id="filter">
+    <!-- <tr><th>Name</th><th>Phone</th></tr> -->
+    <tr ng-repeat="better in betters | filter : 'horseId'">
+      <td>{{betters}}</td>
+      <!-- <td>{{friendObj.phone}}</td> -->
+    </tr>
+    <button type="button" *ngIf="editMode == true" class="btn btn-warning" (click)="getAllBettersByHorse(id)">Filtras</button>
+  </table>
+ 
+  <div class="container bg-light p-1 my-1 border">
+    <table class="table table-bordered table-sm">
+      <thead class ="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Vardas</th>
+          <th scope="col">Pavardė</th>
+          <th scope="col">Statymo suma</th>
+          <th scope="col">Žirgas</th>          
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor = "let better of betters; index as i">
+          <th>{{i+1}}</th>
+          <td class="mr-2 blue-text table-success text-center">{{better.name}}</td>
+          <td class="mr-2 blue-text table-default text-center">{{better.surname}}</td>
+          <td class="mr-2 blue-text table-default text-center">{{better.bet}} EUR</td>
+          <td class="mr-2 blue-text table-info bg-warning text-center">{{better.horseName}}</td>
+          
+          <td><button type="button" class="btn btn-danger" (click)="deleteBetter(better.id)">Delete</button></td>
+          <td><button type="button" class="btn btn-warning" (click)="updateBetter(better)">Update</button></td>
+        </tr>
+      </tbody>
+  
+    </table>
+  </div>

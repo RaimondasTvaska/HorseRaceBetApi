@@ -1,0 +1,39 @@
+<div class="container bg-primary p-1 border">
+    <div class="input-group">
+      <!-- <div class="input-group-prepend">
+        <span class="input-group-text" id="">Add new menu</span>
+      </div> -->
+      <input type="text" class="form-control" placeholder="Žirgo vardas" [(ngModel)]="name">
+      <input type="text" class="form-control" placeholder="Bėgimai" [(ngModel)]="runs">      
+      <input type="text" class="form-control" placeholder="Pergalės" [(ngModel)]="wins">
+      <input type="text" class="form-control" placeholder="Aprašas" [(ngModel)]="about">
+  
+      <button type="button" *ngIf="editMode == false" class="btn btn-success btn-rounded" (click)="addHorse()">Naujas žirgas</button>
+      <button type="button" *ngIf="editMode == true" class="btn btn-warning" (click)="sendUpdatedHorse()">Atnaujink</button>
+    </div>
+  </div>
+  <div class="container bg-light p-1 my-1 border">
+    <table class="table table-bordered table-sm">
+      <thead class ="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Žirgo vardas</th>
+          <th scope="col">Bėgimai</th>
+          <th scope="col">Pergalės</th>
+          <th scope="col">Aprašas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor = "let horse of horses; index as i">
+          <th>{{i+1}}</th>
+          <td class="mr-2 blue-text table-secondary">{{horse.name}}</td>
+          <td class="mr-2 blue-text table-warning">{{horse.runs}}</td>
+          <td class="mr-2 blue-text table-default">{{horse.wins}}</td>
+          <td class="mr-2 blue-text table-default">{{horse.about}}</td>
+          <td><button type="button" class="btn btn-danger" (click)="deleteHorse(horse.id)">Delete</button></td>
+          <td><button type="button" class="btn btn-warning" (click)="updateHorse(horse)">Update</button></td>
+        </tr>
+      </tbody>
+  
+    </table>
+  </div>
