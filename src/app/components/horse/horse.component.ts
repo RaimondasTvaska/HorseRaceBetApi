@@ -25,7 +25,7 @@ export class HorseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.horseService.getAllHorse().subscribe((horseFromApi) =>{
+    this.horseService.getAllHorses().subscribe((horseFromApi) =>{
       this.horses = horseFromApi;
       this.horses.sort((a, b) => a.name.localeCompare(b.name));
   })
@@ -38,8 +38,8 @@ public addHorse(){
     wins : this.wins,
     about : this.about
   }
-  this.horseService.addHorse(newHorse).subscribe((horse_Id) =>{
-    newHorse.id = horse_Id;
+  this.horseService.addHorse(newHorse).subscribe((horseId) =>{
+    newHorse.id = horseId;
     this.horses.push(newHorse);
     this.clearForm();
   })
@@ -68,16 +68,22 @@ public sendUpdatedHorse (){
     about : this.about
   }
   this.horseService.updateHorse(updatedHorse).subscribe(() =>{
-    for (let i = 0; i < this.horses.length; i++) {
-      const hor = this.horses[i];
-      if (hor.id == updatedHorse.id) {
-        hor.name = updatedHorse.name;
-        hor.runs = updatedHorse.runs;          
-        hor.wins = updatedHorse.wins;
-        hor.about = updatedHorse.about;
-        return;          
-      }      
-    }    
+    // for (let i = 0; i < this.horses.length; i++) {
+    //   const hor = this.horses[i];
+    //   if (hor.id == updatedHorse.id) {
+    //     hor.name = updatedHorse.name;
+    //     hor.runs = updatedHorse.runs;          
+    //     hor.wins = updatedHorse.wins;
+    //     hor.about = updatedHorse.about;
+    //     return;          
+    //   }      
+    // }
+    
+    (this.horses = this.horses.map((e) =>
+    e.id !== updatedHorse.id ? e : updatedHorse
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
+    )       
   })
   this.editMode = false;
   this.clearForm();

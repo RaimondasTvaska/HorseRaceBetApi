@@ -24,6 +24,7 @@ export class BetterComponent implements OnInit {
   public horseName: string;
 
   public editMode: boolean = false;
+  public filteredByHorse: number;
 
   constructor(betterService: BetterService, horseService: HorseService) {
     this.betterService = betterService;
@@ -35,8 +36,9 @@ export class BetterComponent implements OnInit {
       this.betters = betterFromApi;
       this.betters.sort((a, b) => b.bet - a.bet);
     });
-    this.horseService.getAllHorse().subscribe((horseFromApi) => {
+    this.horseService.getAllHorses().subscribe((horseFromApi) => {
       this.horses = horseFromApi;
+      this.horses.sort((a, b) => a.name.localeCompare(b.name));
       for (let i = 0; i < this.betters.length; i++) {
         const bh = this.betters[i];
         const selectedHorse = this.horses.filter((h) => h.id == bh.horseId)[0];
@@ -100,8 +102,24 @@ export class BetterComponent implements OnInit {
   }
 
   public getAllBettersByHorse(id : number):void{
-    this.betterService.getAllBettersByHorse(id).subscribe((betterFromApi) => {
+    this.betterService.getAllBetters().subscribe((betterFromApi) => {
       this.betters = betterFromApi;
+      
+      if (id == 0) {
+        this.ngOnInit();
+      }
+      this.betters = this.betters.filter(b => b.horseId == id);
+      
+      this.horseService.getAllHorses().subscribe((horseFromApi) => {
+        this.horses = horseFromApi;
+        this.horses.sort((a, b) => a.name.localeCompare(b.name));
+        for (let i = 0; i < this.betters.length; i++) {
+          const bh = this.betters[i];
+          const selectedHorse = this.horses.filter((h) => h.id == bh.horseId)[0];
+  
+          bh.horseName = selectedHorse.name;
+        }
+      });
       
   })
 }

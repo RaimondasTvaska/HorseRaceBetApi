@@ -26,7 +26,7 @@ export class BetterService {
   public updateBetter(updatedBetter:Better): Observable<Better> {
     return this.http.put<Better>("https://localhost:44348/Better", updatedBetter);
   }
-  public getAllBettersByHorse(id :number): Observable<Better[]>{
-    return this.http.get<Better[]>(`https://localhost:44348/Better/${id}/Horse`)
+  public getAllBettersByHorseId(id :number): Observable<Better[]>{
+    return this.http.get<Better[]>(`https://localhost:44348/Better/FilterByHorseId/${id}`)
   }
 }

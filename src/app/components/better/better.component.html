@@ -3,7 +3,7 @@
       <input type="text" class="form-control" placeholder="Vardas" [(ngModel)]="name">
       <input type="text" class="form-control" placeholder="Pavardė" [(ngModel)]="surname">      
       <input type="text" class="form-control" placeholder="Statymo suma" [(ngModel)]="bet">
-      <input type="text" class="form-control" placeholder="Žirgas" [(ngModel)]="horseId">
+      <!-- <input type="text" class="form-control" placeholder="Žirgas" [(ngModel)]="horseId"> -->
       <select class="form-control" [(ngModel)]="horseId">
         <option *ngFor="let horse of horses" [value]="horse.id">
             {{horse.name}}
@@ -14,15 +14,17 @@
       <button type="button" *ngIf="editMode == true" class="btn btn-warning" (click)="sendUpdatedBetter()">Atnaujink</button>
     </div>
   </div>
-  <table id="filter">
-    <!-- <tr><th>Name</th><th>Phone</th></tr> -->
-    <tr ng-repeat="better in betters | filter : 'horseId'">
-      <td>{{betters}}</td>
-      <!-- <td>{{friendObj.phone}}</td> -->
-    </tr>
-    <button type="button" *ngIf="editMode == true" class="btn btn-warning" (click)="getAllBettersByHorse(id)">Filtras</button>
-  </table>
- 
+  <div class="mr-2 blue-text">
+    <label>Betters by HorseId</label>
+    <select [(ngModel)] = "filteredByHorse">
+      <option selected [ngValue]=0>All</option>
+      <option *ngFor="let horse of horses" [ngValue] = "horse.id">
+        {{horse.name}}
+      </option>
+    </select>
+    <button (click) = "getAllBettersByHorse(filteredByHorse)">Filtras</button>
+  </div>
+  
   <div class="container bg-light p-1 my-1 border">
     <table class="table table-bordered table-sm">
       <thead class ="thead-light">

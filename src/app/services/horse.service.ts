@@ -13,7 +13,7 @@ export class HorseService {
   constructor(http : HttpClient) { 
     this.http = http;
   }
-  public getAllHorse(): Observable<Horse[]>{
+  public getAllHorses(): Observable<Horse[]>{
     return this.http.get<Horse[]>("https://localhost:44348/Horse")
   }
 
