@@ -89,8 +89,8 @@ export class BetterComponent implements OnInit {
       (this.betters = this.betters.map((b) =>
       b.id !== updatedBetter.id ? b : updatedBetter
       )
-      .sort((a, b) => b.bet - a.bet)
       )   
+      .sort((a, b) => b.bet - a.bet)
     })
     this.editMode = false; 
     this.clearForm(); 
